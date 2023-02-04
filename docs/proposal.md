@@ -25,5 +25,5 @@ Another table would be a ratings table with a media id and a type id from the me
 Initial designs
 ---------------
 
-![Sample Page](/docs/sample page.svg)
-![Site Map](/docs/starting site map.svg)
+![Sample Page](/docs/samplepage.svg)
+![Site Map](/docs/startingsitemap.svg)
