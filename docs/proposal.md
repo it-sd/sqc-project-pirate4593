@@ -9,11 +9,11 @@ Web service
 -----------
 
 [IMDb-API](https://imdb-api.com) (API Key)
-*Search /{lang?}/API/Search/{apiKey}/{expression} GET
-*Posters /{lang?}/API/Posters/{apiKey}/{id} GET
-*FullCast /{lang?}/API/FullCast/{apiKey}/{id} GET
-*Trailer /{lang?}/API/Trailer/{apiKey}/{id} GET
-*Ratings /{lang?}/API/Ratings/{apiKey}/{id} GET
+* Search /{lang?}/API/Search/{apiKey}/{expression} GET
+* Posters /{lang?}/API/Posters/{apiKey}/{id} GET
+* FullCast /{lang?}/API/FullCast/{apiKey}/{id} GET
+* Trailer /{lang?}/API/Trailer/{apiKey}/{id} GET
+* Ratings /{lang?}/API/Ratings/{apiKey}/{id} GET
 
 Database use
 ------------
