@@ -2,8 +2,7 @@
 
 Joe O'Connor(joconnor10)
 
-My project is going to be a media library with information on movies, anime, and tv shows.
-The information I will be using will include titles, cast lists, posters, awards, plot, and languages that they could be in.
-I want to make this website so people don't have to search other streaming services to figure out where the show they want to watch is located.
+Media Master's purpose is to have a database of movies, and shows including anime. It will allow Users
+to see a list of movies, shows, or anime. It will also allow users to search for a specific movie, show, or anime.
 
 [Render](https://mediamaster.onrender.com/)
