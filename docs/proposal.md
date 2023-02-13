@@ -18,7 +18,7 @@ Web service
 Database use
 ------------
 
-The data that I will need includes movie, anime, and tv show information like titles, seasons, cast information, plot, ratings, and other things liek that.
+The data that I will need includes movie, anime, and tv show information like titles, seasons, cast information, plot, ratings, and other things like that.
 I'll be needing a few tables that includes this info like a media table to account for all movies, anime, and tv shows. 
 Another table would be a ratings table with a media id and a type id from the media table to connect it to the media table.
 
