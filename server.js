@@ -1,4 +1,4 @@
-require('dotenv').config() // Read environment variables from .env
+require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5163
@@ -15,6 +15,18 @@ express()
 
   .get('/about', (req, res) => {
     res.render('pages/about')
+  })
+
+  .get('/top250m', (req, res) => {
+    res.render('pages/index')
+  })
+
+  .get('/top250tv', (req, res) => {
+    res.render('pages/index')
+  })
+
+  .get('/comingsoon', (req, res) => {
+    res.render('pages/index')
   })
 
   .get('/health', (req, res) => {
