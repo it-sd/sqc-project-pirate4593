@@ -1,0 +1,16 @@
+{
+  "id": 0,
+  "number": 0,
+  "title": "Sample title 0",
+  "story": "Story text here.",
+  "prompt": "Answer prompt here.",
+  "solution": "Solution here.",
+  "stories": [
+    { "id": 0, "title": "Sample title 0" },
+    { "id": 1, "title": "Sample title 1" },
+    { "id": 2, "title": "Sample title 2" },
+    { "id": 3, "title": "Sample title 3" },
+    { "id": 4, "title": "Sample title 4" }
+  ],
+  "total": "1"
+}
