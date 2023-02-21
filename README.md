@@ -6,3 +6,5 @@ Media Master's purpose is to have a database of movies, and shows including anim
 to see a list of movies, shows, or anime. It will also allow users to search for a specific movie, show, or anime.
 
 [Render](https://mediamaster.onrender.com/)
+
+![ER Diagram](/docs/mmerdiagram.png)
