@@ -11,3 +11,5 @@ I picked this heuristic because when I browse my site I don't feel like I'm free
 I know that's because I've only added one other page and I should add more pages to increase the user's freedom to go to more places in my site.
 Another thing I could add is an account system for user's so they can save the movies or shows and add them if they aren't in the database.
 My goal for this heuristic is increase my use of it so user's control and freedom contains more choices within the site.
+
+![Sample page with added design changes](/docs/usercontrolfreedomsketch.png)
