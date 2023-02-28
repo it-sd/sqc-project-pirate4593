@@ -1,8 +1,49 @@
 <%- include('../shared/header.ejs') _%>
  <main>
-  <h3 id="mediaTitle"><%= title %></h3>
-  <%= genre %>
-  <%- description %>
-  <%= main_cast %>
-  <img id='mediaPoster' src='<%= poster %>'>
+  <div id="mediaDiv">
+    <h3 id="mediaTitle"><%= media.title %></h3>
+    <p id="mediaGenre"><%= media.genre %></p>
+    <p id="mediaDescription"><%= media.description %></p>
+    <p id="mediaCast"><%= media.main_cast %></p>
+  </div>
+  <img id='mediaPoster' src='<%= media.poster %>' alt="Sample Poster">
+  <div id="buttons">
+      <div class="spacer"></div>
+      <button id="Like">Like</button>
+      <div class="spacer"></div>
+      <button id="Dislike">Dislike</button>
+  </div>
+  <script>
+    const recordVote = async function (buttonId) {
+    
+      const data = {
+        mediaId:  <%- media.id %>,
+        vote: buttonId
+      }
+    
+      const response = await fetch('/vote', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+    
+      const buttons = document.getElementById('buttons')
+      if (response.ok) {
+        const result = await response.json()
+        if (result.ok) {
+          buttons.innerHTML = '<strong>Thank you for your vote!</strong>'
+          return
+        }
+      }
+    
+      buttons.innerHTML = '<strong>We couldn\'t record your vote. Please try again later.</strong>'
+    }
+    
+    document.querySelectorAll('button').forEach(function (b) {
+      b.addEventListener('click', recordVote.bind(null, b.id))
+    })
+      </script>
  </main>

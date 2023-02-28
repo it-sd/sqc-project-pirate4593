@@ -1,11 +1,11 @@
 <%- include('../shared/header.ejs') %>
 <main>
-  <h3>Movie List</h3>
+  <h3>Media List</h3>
   <ol>
-    <%_ for (const movie of movies) { _%>
-      <li><a href="/<%= movie.id %>"><%= movie.title %></a></li> 
+    <%_ for (const media of medias) { _%>
+      <li><a href="/<%= media.id %>"><%= media.title %></a></li> 
     <%_ } _%>
-    </ol>
+  </ol>
 </main>
 </body>
 </html>

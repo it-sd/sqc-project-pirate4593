@@ -63,9 +63,67 @@ nav a:hover {
   border-radius: 5px;
   color: #000;
 }
+main {
+  position: relative;
+}
 p {
   text-align: center;
   font-size: 25px;
   display: block;
   margin: auto;
+}
+#mediaTitle {
+  text-align: center;
+  display: block;
+  position: relative;
+}
+#mediaGenre {
+ text-align: center;
+ position: relative;
+ font-size: 15px;
+ display: block;
+}
+#mediaDescription {
+  text-align: center;
+  position: relative;
+  height: 100px;
+  width: 500px;
+  font-size: 20px;
+  display: block;
+ }
+ #mediaCast {
+  text-align: center;
+  position: relative;
+  font-size: 15px;
+  display: block;
+ }
+ #mediaPoster {
+  position: absolute;
+  bottom: 10px;
+  left: 900px;
+  width: 250px;
+  height: 300px;
+  border: #0FF 5px solid;
+  border-radius: 5px;
+ }
+ #mediaDiv {
+  position: relative;
+  border: #0FF 5px solid;
+  border-radius: 5px;
+  width: 500px;
+  left: 300px;
+  padding-top: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+ }
+ #buttons {
+  display: flex;
+  padding-top: 5px;
+  position: relative;
+  left: 450px;
+}
+
+button,
+.spacer {
+  margin: 15px;
 }
