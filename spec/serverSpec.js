@@ -1,5 +1,5 @@
 const { 
-  queryAllMovies, queryAllAnime, queryAllTVShows, queryMedia 
+  queryAllMovies, queryAllAnime, queryAllTVShows, queryMedia, top250 
 } =
   require('../server.js')
 
@@ -35,6 +35,14 @@ describe('media server', function () {
 
   describe("GET '/anlist'", function () {
     shouldBe200('/anlist')
+  })
+
+  describe("GET '/top250m'", function () {
+    shouldBe200('/top250m')
+  })
+
+  describe("GET '/top250tv'", function () {
+    shouldBe200('/top250tv')
   })
 
   describe("GET '/1'", function () {
@@ -173,7 +181,13 @@ describe('media server', function () {
       expect(results.medias.length).toBeGreaterThan(0)
     })
   })
-
+  describe('top250', function () {
+    it('should return 250 media items', async function () {
+      const results = await top250('Movies')
+      expect(results).toBeDefined()
+      expect(results.length).toBe(250)
+    })
+  })
   describe('queryMedia', function () {
     beforeEach(async function () {
       this.results = await queryMedia(1)

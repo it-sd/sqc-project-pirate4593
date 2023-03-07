@@ -1,7 +1,7 @@
 
 body {
-  color: #0FF;
-  background-color: #000;
+  color: #F0C537;
+  background-color: #000000;
   line-height: 1.2;
   padding-left: 50px;
   padding-right: 50px;
@@ -14,19 +14,29 @@ header {
   width: 1090px;
 }
 h1 {
-  color: #0FF;
+  font-size: 50px;
   text-align: center;
+  font-family:Haettenschweiler;
 }
 h3 {
   font-size: 30px;
+  font-family: Impact;
 }
-li {
+
+#mediaLink {
+  color:#17CCF0;
+  text-decoration: none;
+  font-size: 25px;
   text-align: center;
-  font-size: 20px;
+  font-family: 'Lucida Sans';
 }
 h1 a {
   color: inherit;
   text-decoration: none;
+}
+ol {
+  columns: 5;
+  list-style-type: decimal !important;
 }
 ul {
   list-style: none;
@@ -38,53 +48,64 @@ li {
   text-align: center;
 	float:left;
 	margin-left:2px;
-	border:1px solid #000;
 }
 nav a {
-  background-color: #000;
-  border-color: #0FF;
+  background-color: #4F15A3;
+  border-color: #17CCF0;
   border-width: 1px;
   border-style: solid;
   border-radius: 5px;
   text-align: center;
   text-decoration: none;
-  font-family: Helvetica, sans-serif;
-  color: #0FF;
+  font-family: Helvetica;
+  color: #17CCF0;
   padding: 0 20px;
   font-size: 125%;
   display: block;
 }
 
 nav a:hover {
-  background-color: #0FF;
-  border-color: #000;
+  background-color: #17CCF0;
+  border-color: #4F15A3;
   border-width: 1px;
   border-style: solid;
   border-radius: 5px;
-  color: #000;
+  color: #7B2BF0;
 }
 main {
   position: relative;
 }
+
 p {
   text-align: center;
+  font-family: 'Lucida Sans';
   font-size: 25px;
   display: block;
   margin: auto;
 }
+
+#topPoster {
+  width: 150px;
+  height: 200px;
+}
+
 #mediaTitle {
+  font-family: Impact;
   text-align: center;
   display: block;
   position: relative;
 }
+
 #mediaGenre {
  text-align: center;
  position: relative;
- font-size: 15px;
+ font-size: 20px;
+ padding-bottom: 15px;
  display: block;
 }
+
 #mediaDescription {
-  text-align: center;
+  text-align: left;
   position: relative;
   height: 100px;
   width: 500px;
@@ -94,21 +115,24 @@ p {
  #mediaCast {
   text-align: center;
   position: relative;
+  padding-top: 25px;
   font-size: 15px;
   display: block;
  }
  #mediaPoster {
-  position: absolute;
-  bottom: 10px;
+  position: relative;
+  bottom: 310px;
   left: 900px;
   width: 250px;
   height: 300px;
-  border: #0FF 5px solid;
+  border: #17CCF0 5px solid;
   border-radius: 5px;
  }
  #mediaDiv {
+  font-size: 15px;
+  font-family: 'Lucida Sans';
   position: relative;
-  border: #0FF 5px solid;
+  border: #17CCF0 5px solid;
   border-radius: 5px;
   width: 500px;
   left: 300px;
@@ -120,7 +144,8 @@ p {
   display: flex;
   padding-top: 5px;
   position: relative;
-  left: 450px;
+  bottom: 300px;
+  left: 475px;
 }
 
 button,

@@ -1,0 +1,17 @@
+<%- include('../shared/header.ejs') %>
+<main>
+  <h3>Top 250 Media</h1>
+  <ol>
+    <% for (let i = 0; i < 250; i++) {  let j = i + 1 %>
+      <br>
+      <img id='topPoster' src='<%= media[i].image %>' alt="<%= media.title %> Poster">
+      <br>
+      <li><%= j %>. <%= media[i].title %></li> 
+      <br>
+    <% } %>
+  </ol>
+</body>
+</html>
+</main>
+</body>
+</html>

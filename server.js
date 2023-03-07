@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5163
-
+const axios = require('axios');
 const { Pool } = require('pg')
 
 const pool = new Pool({
@@ -61,12 +61,33 @@ const queryMedia = async function (id) {
   return results.length ? results[0] : []
 }
 
+const top250 = async function (type) {
+try {
+  const response = await axios.get(`https://imdb-api.com/en/API/Top250${type}/${process.env.API_KEY}`, {
+    method: 'GET',
+    redirect: 'follow'
+  })
+
+  const topMedia = response.data.items.slice(0, 250)
+
+  const mediaData = topMedia.map((media) => ({
+    title: media.title,
+    image: media.image
+  }))
+  return mediaData
+} catch (err) {
+  console.log(err)
+}
+return false
+}
+
 
 module.exports = {
   queryAllMovies,
   queryAllTVShows,
   queryAllAnime,
-  queryMedia
+  queryMedia,
+  top250
 }
 
 express()
@@ -98,6 +119,20 @@ express()
     res.render('pages/list', medias)
   })
 
+  .get('/search', async function (req, res) {
+    res.render('pages/search')
+  })
+
+  .get('/top250m', async function (req, res) {
+    const media = await top250('Movies')
+    res.render('pages/top', { media: media })
+  })
+  
+  .get('/top250tv', async function (req, res) {
+    const media = await top250('TVs')
+    res.render('pages/top', { media: media })
+  })  
+
   .get('/health', async function (req, res) {
     const count = await query('SELECT COUNT(*) AS total FROM media;')
     if (count.length > 0 && count[0].total > 1) {
@@ -110,14 +145,6 @@ express()
   .get('/:mediaId', async function (req, res) {
     const media = await queryMedia(req.params.mediaId);
     res.render('pages/media', { media });
-  })
-
-  .get('/top250m', (req, res) => {
-    res.render('pages/top')
-  })
-
-  .get('/top250tv', (req, res) => {
-    res.render('pages/top')
   })
 
   .get('/comingsoon', (req, res) => {
