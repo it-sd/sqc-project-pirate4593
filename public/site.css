@@ -30,13 +30,15 @@ h3 {
   text-align: center;
   font-family: 'Lucida Sans';
 }
+label {
+  font-family: 'Lucida Sans';
+}
 h1 a {
   color: inherit;
   text-decoration: none;
 }
 ol {
   columns: 5;
-  list-style-type: decimal !important;
 }
 ul {
   list-style: none;
@@ -87,6 +89,7 @@ p {
 #topPoster {
   width: 150px;
   height: 200px;
+  border: 1px solid #4F15A3;
 }
 
 #mediaTitle {
@@ -102,6 +105,13 @@ p {
  font-size: 20px;
  padding-bottom: 15px;
  display: block;
+}
+
+#mediaLang {
+  text-align: center;
+  position: relative;
+  font-size: 20px;
+  padding-bottom: 10px;
 }
 
 #mediaDescription {
@@ -128,6 +138,13 @@ p {
   border: #17CCF0 5px solid;
   border-radius: 5px;
  }
+ #mediaRating {
+  position: relative;
+  margin: 0;
+  left: 920px;
+  bottom: 300px;
+  width: 250px;
+ }
  #mediaDiv {
   font-size: 15px;
   font-family: 'Lucida Sans';
@@ -146,6 +163,7 @@ p {
   position: relative;
   bottom: 300px;
   left: 475px;
+  width: 200px;
 }
 
 button,

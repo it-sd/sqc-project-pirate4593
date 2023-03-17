@@ -1,8 +1,16 @@
 <%- include('../shared/header.ejs') %>
 <main>
-  <h3>Search Media</h1>
-  <input id="searchInput" maxlength="32" placeholder="Wizard of Oz">
-  <button id="searchButton">Search</button>
+  <div id="searchResult">
+    <ol>
+      <% for (let i = 0; i < media.length; i++) { %>
+        <li>
+          <a href="/<%= media[i].id %>">
+            <img id="topPoster"src="<%= media[i].poster %>" alt="<%= media[i].title %>">
+          </a>
+        </li>
+      <% } %>
+    </ol>
+  </div>
 </main>
 </body>
 </html>

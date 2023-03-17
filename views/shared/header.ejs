@@ -16,14 +16,41 @@
       <ul>
         <li><a href='/'>Home</a></li>
         <li><a href='/about'>About</a></li>
-        <li><a href='/search'>Search</a></li>
+        <li><a href='/comingsoon'>Coming Soon</a></li>
         <li><a href='/mlist'>Movie List</a></li>
         <li><a href='/top250m'>Top 250 Movies</a></li>
+        <li><a href='/mpmovie'>Most Popular Movies</a></li>
         <li><a href='/tvlist'>Show List</a></li>
         <li><a href='/top250tv'>Top 250 TV Shows</a></li>
-        <li><a href='/anlist'>Anime List</a></li>
+        <li><a href='/mptv'>Most Popular TV Shows</a></li>
+        <li>
+        <form action="/search" method="get">
+          <label for="searchTerm">Media Name:</label>
+          <input type="text" id="searchTerm" name="search">
+        
+          <label for="mediaType">Media type:</label>
+          <select id="mediaType" name="type">
+            <option value="Movie">Movies</option>
+            <option value="Series">TV Shows</option>
+          </select>
+        
+          <button id="searchButton"type="submit">Search</button>
+
+          <script>
+            const searchButton = document.querySelector('#searchButton')
+            const searchInput = document.getElementById('searchTerm')
+            const searchResult = document.querySelector('#searchResult')
+          
+            searchButton.addEventListener('click', async function () {
+              const input = searchInput.value
+              const mediaType = document.getElementById('mediaType').value
+              const response = await fetch(`/search?search=${input}&type=${mediaType}`)
+              const result = await response.json()
+            })
+          </script>
+        </li>
       </ul>
     </nav>
-    <br/>
+    <br><br><br>
     <h1><a href='/'>Media Master</a></h1>
   </header>

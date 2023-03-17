@@ -29,7 +29,7 @@ const query = async function (sql, params) {
 }
 
 const queryAllMovies = async function () {
-  const sql = `SELECT id, title, (SELECT MAX(id) FROM media) AS total
+  const sql = `SELECT id, imdb_id, title, (SELECT MAX(id) FROM media) AS total
     FROM media
     WHERE media_type_id = 1
     ORDER BY id;`
@@ -38,7 +38,7 @@ const queryAllMovies = async function () {
 }
 
 const queryAllTVShows = async function () {
-  const sql = `SELECT id, title, (SELECT MAX(id) FROM media) AS total
+  const sql = `SELECT id, imdb_id, title, (SELECT MAX(id) FROM media) AS total
     FROM media
     WHERE media_type_id = 2
     ORDER BY id;`
@@ -46,17 +46,8 @@ const queryAllTVShows = async function () {
   return { medias: results }
 }
 
-const queryAllAnime = async function () {
-  const sql = `SELECT id, title, (SELECT MAX(id) FROM media) AS total
-    FROM media
-    WHERE media_type_id = 3
-    ORDER BY id;`
-  const results = await query(sql)
-  return { medias: results }
-}
-
 const queryMedia = async function (id) {
-  const sql = `SELECT * FROM media WHERE number = $1`
+  const sql = `SELECT * FROM media WHERE imdb_id = $1`
   const results = await query(sql, [id])
   return results.length ? results[0] : []
 }
@@ -72,8 +63,10 @@ try {
 
   const mediaData = topMedia.map((media) => ({
     title: media.title,
-    image: media.image
+    poster: media.image,
+    id: media.id
   }))
+
   return mediaData
 } catch (err) {
   console.log(err)
@@ -85,7 +78,6 @@ return false
 module.exports = {
   queryAllMovies,
   queryAllTVShows,
-  queryAllAnime,
   queryMedia,
   top250
 }
@@ -96,8 +88,67 @@ express()
   .use(express.urlencoded({ extended: true }))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', function (req, res) {
-    res.render('pages/index')
+  .get('/', async function (req, res) {
+    try {
+      const response = await fetch(`https://imdb-api.com/en/API/InTheaters/${process.env.API_KEY}`)
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new TypeError("Oops, we haven't got JSON!");
+      }
+  
+      const mostPopular = await response.json()
+      const media = mostPopular.items.map((media) => ({
+        title: media.title,
+        poster: media.image,
+        id: media.id
+      }))
+      res.render('pages/index', { media })
+    } catch (err) {
+      console.log(err)
+      res.json({ error: 'There was an error with your request' })
+    }
+  })
+
+  .get('/mpmovie', async function (req, res) {
+    try {
+      const response = await fetch(`https://imdb-api.com/en/API/MostPopularMovies/${process.env.API_KEY}`)
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new TypeError("Oops, we haven't got JSON!");
+      }
+  
+      const mostPopular = await response.json()
+      const media = mostPopular.items.map((media) => ({
+        title: media.title,
+        poster: media.image,
+        id: media.id
+      }))
+      res.render('pages/popular', { media })
+    } catch (err) {
+      console.log(err)
+      res.json({ error: 'There was an error with your request' })
+    }
+  })
+
+  .get('/mptv', async function (req, res) {
+    try {
+      const response = await fetch(`https://imdb-api.com/en/API/MostPopularTVs/${process.env.API_KEY}`)
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new TypeError("Oops, we haven't got JSON!");
+      }
+  
+      const mostPopular = await response.json()
+      const media = mostPopular.items.map((media) => ({
+        title: media.title,
+        poster: media.image,
+        id: media.id
+      }))
+      res.render('pages/popular', { media })
+    } catch (err) {
+      console.log(err)
+      res.json({ error: 'There was an error with your request' })
+    }
   })
 
   .get('/about', (req, res) => {
@@ -114,13 +165,28 @@ express()
     res.render('pages/list', medias)
   })
 
-  .get('/anlist', async function (req, res) {
-    const medias = await queryAllAnime()
-    res.render('pages/list', medias)
-  })
-
   .get('/search', async function (req, res) {
-    res.render('pages/search')
+    const searchInput = req.query.search
+    const searchType = req.query.type
+    try {
+      const response = await fetch(`https://imdb-api.com/en/API/Search${searchType}/${process.env.API_KEY}/${searchInput}`)
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new TypeError("Oops, we haven't got JSON!");
+      }
+  
+      const searchResults = await response.json()
+      const media = searchResults.results.map((media) => ({
+        title: media.title,
+        poster: media.image,
+        mediaType: media.type,
+        id: media.id
+      }))
+      res.render('pages/search', { media })
+    } catch (err) {
+      console.log(err)
+      res.json({ error: 'There was an error with your request' })
+    }
   })
 
   .get('/top250m', async function (req, res) {
@@ -131,7 +197,30 @@ express()
   .get('/top250tv', async function (req, res) {
     const media = await top250('TVs')
     res.render('pages/top', { media: media })
-  })  
+  })
+  
+  .get('/comingsoon', async function (req, res) {
+    try {
+      const response = await fetch(`https://imdb-api.com/en/API/ComingSoon/${process.env.API_KEY}`)
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new TypeError("Oops, we haven't got JSON!");
+      }
+  
+      const comingSoon = await response.json()
+      const media = comingSoon.items.map((media) => ({
+        title: media.title,
+        poster: media.image,
+        mediaType: media.type,
+        id: media.id,
+        releaseDate: media.releaseState
+      }))
+      res.render('pages/soon', { media })
+    } catch (err) {
+      console.log(err)
+      res.json({ error: 'There was an error with your request' })
+    }
+  })
 
   .get('/health', async function (req, res) {
     const count = await query('SELECT COUNT(*) AS total FROM media;')
@@ -143,12 +232,47 @@ express()
   })
 
   .get('/:mediaId', async function (req, res) {
-    const media = await queryMedia(req.params.mediaId);
-    res.render('pages/media', { media });
-  })
-
-  .get('/comingsoon', (req, res) => {
-    res.render('pages/')
+    const client = await pool.connect()
+    const selectSql = 'SELECT imdb_id FROM media WHERE imdb_id = $1::text'
+    const result = await client.query(selectSql, [req.params.mediaId])
+    if (result.rows.length === 1) {
+      const media = await queryMedia(req.params.mediaId);
+      res.render('pages/media', { media });
+    } else {
+    try {
+      const response = await fetch(`https://imdb-api.com/en/API/Title/${process.env.API_KEY}/${req.params.mediaId}`, {
+        method: 'GET',
+        redirect: 'follow'
+      })
+    
+      const imdbMedia = await response.json()
+    
+      const media = {
+        title: imdbMedia.title,
+        poster: imdbMedia.image,
+        description: imdbMedia.plot,
+        genre: imdbMedia.genres,
+        main_cast: imdbMedia.stars,
+        id: imdbMedia.id,
+        type: imdbMedia.type,
+        lang: imdbMedia.languages,
+        rating: imdbMedia.imDbRating
+      }
+      
+      if (result.rows.length === 0) {
+        // The data doesn't exist in the database, so we can insert it
+        const insertSql = `INSERT INTO media (imdb_id, title, genre, description, main_cast, poster, media_type_id, lang, rating)
+          VALUES ($1::TEXT, $2::TEXT, $3::TEXT, $4::TEXT, $5::TEXT, $6::TEXT, $7::INTEGER, $8::TEXT, $9::DECIMAL);`
+        let type = 0
+        if (media.type == 'Movie') type = 1
+        else if (media.type == 'TVSeries') type = 2
+        await client.query(insertSql, [media.id, media.title, media.genre, media.description, media.main_cast, media.poster, type, media.lang, media.rating])
+      }
+      res.render('pages/media', { media })
+    } catch (err) {
+      console.log(err)
+    }
+    }
   })
 
   .post('/vote', async function (req, res) {
@@ -156,13 +280,7 @@ express()
 
     try {
       const client = await pool.connect()
-      const id = Number(req.body.mediaId)
-
-      if (!Number.isInteger(id) || id < 1) {
-        console.error(`Unexpected media id of ${req.body.mediaId}`)
-        res.status(400).json({ ok: false })
-        return
-      }
+      const id = req.body.mediaId
 
       let vote
       if (req.body.vote === 'Like') vote = 1
@@ -172,9 +290,18 @@ express()
         res.status(400).json({ ok: false })
         return
       }
+      let insertSql = `INSERT INTO vote (media_id, value)
+      VALUES ($1::INTEGER, $2::FLOAT);`
 
-      const insertSql = `INSERT INTO vote (media_id, value)
+      if (!Number(id)) {
+       insertSql = `INSERT INTO vote (imdb_id, value)
+        VALUES ($1::TEXT, $2::FLOAT);`
+      } else if (id > 0) {
+        insertSql = `INSERT INTO vote (media_id, value)
         VALUES ($1::INTEGER, $2::FLOAT);`
+      } else {
+        res.json({ ok: false})
+      }
       await client.query(insertSql, [id, vote])
 
       res.json({ ok: true })

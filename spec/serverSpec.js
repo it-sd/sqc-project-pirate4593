@@ -1,5 +1,5 @@
 const { 
-  queryAllMovies, queryAllAnime, queryAllTVShows, queryMedia, top250 
+  queryAllMovies, queryAllTVShows, queryMedia, top250 
 } =
   require('../server.js')
 
@@ -33,8 +33,8 @@ describe('media server', function () {
     shouldBe200('tvlist')
   })
 
-  describe("GET '/anlist'", function () {
-    shouldBe200('/anlist')
+  describe("GET '/mptv'", function () {
+    shouldBe200('/mptv')
   })
 
   describe("GET '/top250m'", function () {
@@ -45,60 +45,12 @@ describe('media server', function () {
     shouldBe200('/top250tv')
   })
 
-  describe("GET '/1'", function () {
-    shouldBe200('/1')
+  describe("GET '/tt1375666'", function () {
+    shouldBe200('/tt1375666')
   })
 
   describe("POST '/vote'", function () {
     const url = 'http://localhost:5163/vote'
-
-    it('should require an integer id', async function () {
-      const data = {
-        mediaId: 1.5,
-        vote: 'like'
-      }
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      expect(response.ok).toBeFalse()
-    })
-
-    it('should require a non-zero id', async function () {
-      const data = {
-        mediaId: 0,
-        vote: 'Like'
-      }
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      expect(response.ok).toBeFalse()
-    })
-
-    it('should require a positive id', async function () {
-      const data = {
-        storyId: -1,
-        vote: 'Like'
-      }
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      expect(response.ok).toBeFalse()
-    })
 
     it('should accept a like vote', async function () {
       const data = {
@@ -172,15 +124,6 @@ describe('media server', function () {
       expect(results.medias.length).toBeGreaterThan(0)
     })
   })
-
-  describe('queryAllAnime', function () {
-    it('should return at least one Anime', async function () {
-      const results = await queryAllAnime()
-      expect(results).toBeDefined()
-      expect(results.medias).toBeDefined()
-      expect(results.medias.length).toBeGreaterThan(0)
-    })
-  })
   describe('top250', function () {
     it('should return 250 media items', async function () {
       const results = await top250('Movies')
@@ -190,7 +133,7 @@ describe('media server', function () {
   })
   describe('queryMedia', function () {
     beforeEach(async function () {
-      this.results = await queryMedia(1)
+      this.results = await queryMedia('tt1375666')
     })
 
     const shouldHave = function (source, property) {

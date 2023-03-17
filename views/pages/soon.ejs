@@ -1,17 +1,14 @@
 <%- include('../shared/header.ejs') %>
 <main>
-  <h3>Top 250 Media</h1>
+  <h1>Coming Soon</h1>
   <ol>
-    <% for (let i = 0; i < 250; i++) {  let j = i + 1 %>
-      <br>
+    <% for (let i = 0; i < media.length; i++) { %>
       <a href="/<%= media[i].id %>"><img id='topPoster' src='<%= media[i].poster %>' alt="<%= media[i].title %> Poster"></a>
       <br>
-      <li><%= j %>. <%= media[i].title %></li> 
+      <li><%= media[i].releaseDate %></li> 
       <br>
     <% } %>
   </ol>
-</body>
-</html>
 </main>
 </body>
 </html>

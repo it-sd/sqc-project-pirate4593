@@ -2,22 +2,24 @@
  <main>
   <div id="mediaDiv">
     <h3 id="mediaTitle"><%= media.title %></h3>
-    <p id="mediaGenre"><%= media.genre %></p>
+    <p id="mediaGenre">Genres: <%= media.genre %></p>
+    <p id="mediaLang">Languages: <%= media.lang %></p>
     <p id="mediaDescription"><%= media.description %></p>
     <p id="mediaCast"><%= media.main_cast %></p>
   </div>
   <img id='mediaPoster' src='<%= media.poster %>' alt="<%= media.title %> Poster">
+  <p id="mediaRating">IMDB Rating: <%= media.rating %></p>
   <div id="buttons">
       <div class="spacer"></div>
-      <button id="Like">Like</button>
+      <button id="Like" type="button">Like</button>
       <div class="spacer"></div>
-      <button id="Dislike">Dislike</button>
+      <button id="Dislike" type="button">Dislike</button>
   </div>
   <script>
     const recordVote = async function (buttonId) {
     
       const data = {
-        mediaId:  <%- media.id %>,
+        mediaId:  '<%- media.id %>',
         vote: buttonId
       }
     
@@ -47,3 +49,5 @@
     })
       </script>
  </main>
+ </body>
+ </html>
